@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>treeTable.JS | 实例</title>
+  <link rel="shortcut icon" href="./resource/logo.png" type="image/x-icon">
+	<link rel="stylesheet" href="./treeTable.css">
+</head>
+<body>
+<div id="tree_contian" ></div>
+<div>
+  <ul class="menu" id="menu" onclick="upDataByMenu(event)">
+    <li id="addNew">新增</li>
+    <li id="delete">删除</li>
+    <li id="edit">编辑</li>
+    <li id="print">打印</li>
+</ul>
+</div>
+  <script src="./treeTable.js"></script>
+  <script src="./resource/data.js"></script>
+	<script>
+    let currentRow=null
+    var treeTable = new treeTable({
+			el:"#tree_contian",
+			thead:["功能名称","是否禁用","功能类型","创建时间"],
+			columns:["menuText","menuIsmodify","menuType","menuCreatetime"],
+			idName:"menuId",
+      fatherIdName:"menuParentid",
+      timeName:"menuCreatetime",
+			data:data.menuTree
+    })
+    // 鼠标右键事件
+    function upDataByMenu (e) {
+    switch (e.target.id) {
+      case "addNew":
+            treeTable.openAddForm(currentRow.id)
+            hiddenMenu()
+          break;
+      case "edit":
+            treeTable.openEditForm(currentRow.id)
+            hiddenMenu()
+        break;
+      case "print":
+          treeTable.printTreeData()
+          hiddenMenu()
+      break;
+      case "delete":
+            treeTable.removeCurrentNode(currentRow.id)
+            hiddenMenu()
+        break;
+      default:
+        break;
+    }
+  }
+// treetable点击事件
+  function treeTableClickEvent (event,row) {
+    currentRow = row
+      if (event.button ==2) {
+      let menu=document.getElementById('menu');
+          menu.style.visibility = 'visible';
+          menu.style.left = event.clientX+20+'px';
+          menu.style.top = event.clientY-10+'px';
+      } else if (event.button == 0) {
+        menu.style.visibility = 'hidden';
+      }      
+  }
+  function hiddenMenu () {
+    let menu = document.getElementById('menu');
+        menu.style.visibility='hidden';
+  }
+  // 添加数据treeTableCancel事件
+  function treeTableCancel () {
+    let formWrapper = document.getElementById("addDataForm_wrapper")
+    formWrapper.remove()
+  }
+  function treeTableEditCancel () {
+    let formWrapper = document.getElementById("editDataForm_wrapper")
+    formWrapper.remove()
+  }
+  //添加数据treeTableSubmit事件
+  function treeTableSubmit () {
+    let formWrapper = document.getElementById("addDataForm_wrapper")
+    let inputs = formWrapper.getElementsByTagName("input")
+    let getAddData={}
+    let isCompleted=false
+    for (let i = 0; i < inputs.length; i++){
+      if (inputs[i].type == "text") {
+        getAddData[inputs[i].name]=inputs[i].value
+      }
+    } 
+    for (let key in getAddData) {
+     if (getAddData[key] == "") {
+       alert("您有信息未填写完整")
+       return false
+     }else{
+      isCompleted =true
+     }
+    }
+    console.log(getAddData);
+    isCompleted ? treeTable.insertChildNode(currentRow,getAddData): alert("您有信息未填写完整")
+    isCompleted ? formWrapper.remove() : alert("您有信息未填写完整")
+  }
+  //表单数据收集
+  function treeTableEditSubmit () {
+    let formWrapper = document.getElementById("editDataForm_wrapper")
+    let inputs = formWrapper.getElementsByTagName("input")
+    let getAddData = {}
+    let isCompleted = false
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].type == "text") {
+        getAddData[inputs[i].name] = inputs[i].value
+      }
+    } 
+    for (let key in getAddData) {
+     if (getAddData[key] == "") {
+       alert("您有信息未填写完整")
+       return false
+     }else{
+      isCompleted = true
+     }
+    
+    }
+    isCompleted ? treeTable.editCurrentNode(currentRow,getAddData) : alert("您有信息未填写完整")
+    isCompleted ? formWrapper.remove() : alert("您有信息未填写完整")
+  }
+	</script>
+</body>
+</html>

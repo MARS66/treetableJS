@@ -1,0 +1,208 @@
+:root {
+    --light: #efeff0;
+    --dark: #303032;
+    --primary: #2060A0
+  }
+  *{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+  }
+  table[class="treetable"] {
+    border: 1px solid var(--light);
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  table[class="treetable"] tr:focus {
+    background-color: var(--primary);
+    color: var(--light);
+    border: 0;
+    outline: 0;
+  }
+  table[class="treetable"] td{
+    text-align:"center";
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  table[class="treetable"] th {
+    background-color: var(--light);
+    color: var(--dark);
+  }
+  
+  table[class="treetable"] td:not(:first-child), table[class="treetable"] th {
+    border: 0;
+    padding: 5px 0 ;
+    font-size: 1.1em;
+    text-align: center;
+    /*overflow: hidden;*/
+  }
+  
+  table[class="treetable"] tr[class="expandable"] td span[class="expand-button"] {
+    display: inline-block;
+    position: relative;
+    width: 6px;
+    height: 6px;
+    margin: 4px 10px 0 0;
+    box-sizing: content-box !important;
+    border: 5px solid transparent;
+  }
+  table[class="treetable"] tr[class="expandable"] td span[class="expand-button"]:focus {
+    outline: 0;
+  }
+  
+  table[class="treetable"] tr[class="expandable"] td span[class="expand-button"]::after {
+    box-sizing: content-box !important;
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    border-top: 2px solid var(--dark);
+    border-right: 2px solid var(--dark);
+    content: "";
+    width: 100%;
+    height: 100%;
+    margin-right: 10px;
+    transform: rotateZ(45deg);
+  }
+  
+  table[class="treetable"] tr[class="expandable"][expanded="true"] td span[class="expand-button"]::after {
+    transform: rotateZ(135deg);
+  }
+  
+  table[class="treetable"] tr td span[class="indent"] {
+    display: inline-block;
+    width:3rem;
+  }
+ul[class="menu"] {
+    list-style: none;
+    position: absolute;
+    z-index:9999;
+    visibility: hidden;
+    border:1px solid #5A9CCC;
+    background:#FFF;
+    padding: 0;
+    top: 0;
+}
+ul[class="menu"] li{
+    text-align: center;
+    font-size: 12px;
+    padding:10px;
+    width:100px;
+    /* border-bottom:1.4px solid #6b6d6e; */
+    cursor:pointer;
+}
+ul[class="menu"] li.bottom{
+    border-bottom: none;
+}
+ul[class="menu"] li:hover{
+   background:#5A9CCC;
+   /* border-color: #5A9CCC; */
+}
+.formBox_wrapper{
+  z-index: 8000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #fff;
+  /* background: linear-gradient(45deg,#c580c0,#4158d0); */
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.formBox_wrapper .getData_form{
+  width: 1420px;
+  display:flex;
+  justify-items: start;
+  flex-wrap:wrap;
+}
+.wrapper{
+  width: 450px;
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px ;
+}
+.wrapper .input-data{
+  width: 100%;
+  height: 40px;
+  position: relative;
+
+}
+.wrapper .input-data input{ 
+  width: 100%;
+  height: 100%;
+  border: 0;
+  position: absolute;
+  font-size: 18px;
+  border-bottom: 2px solid silver;
+
+}
+.input-data input:valid ~ label,
+.input-data input:focus ~ label{ 
+ transform: translateY(-26px);
+ font-size: 22px;
+ color: #4158d0;
+}
+.wrapper .input-data label{ 
+  position: absolute;
+  font-size: 24px;
+  bottom:10px ;
+  left: 0;
+  color: gray;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.input-data .underline{
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+}
+.input-data .underline:before{
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: #4158d0;
+  transform: scaleX(0);
+  transition: all 0.3s ease;
+}
+.input-data input:valid ~ .underline:before,
+.input-data input:focus ~ .underline:before{ 
+  transform: scaleX(1);
+}
+.formButton{
+  width:1600px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.formButton>input{
+  width:400px;
+  height: 40px;
+  display: inline-block;
+  border-radius: 5px;
+ font-size: 24px;
+ margin:0 10px;
+ transition: 0.2s;
+}
+.formButton>input:hover{
+  transform: scale(1.01);
+}
+.formButton :first-child{
+  border-color:#409eff ;
+  background-color: #409eff;
+  color: #fff;
+}
+.formButton :last-child{
+  color: #fff;
+  border-color:#f56c6c;
+  background-color: #f56c6c;
+}
