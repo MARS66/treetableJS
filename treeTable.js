@@ -7,7 +7,7 @@
 (function (global,factory) {
 	// 判断引入方式
 	typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() :
-	typeof define === "function" && define.amd ? difine(factory) : global.treeTable = factory()	
+	typeof define === "function" && define.amd ? define(factory) : global.treeTable = factory()	
 })(this,function () {'use strict';
 // 处理数据生成tree数据
 function deelData (data,id,fatherId) {
